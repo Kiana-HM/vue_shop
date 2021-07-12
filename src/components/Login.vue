@@ -30,7 +30,7 @@ export default {
   name: 'Login',
   data() {
     return {
-      //这是登陆表单的数据绑定对象
+      // 这是登陆表单的数据绑定对象
       loginForm: {
         username: 'admin',
         password: '123456'
@@ -52,7 +52,7 @@ export default {
     }
   },
   methods: {
-    //点击重置按钮，重置表单
+    // 点击重置按钮，重置表单
     loginFormRef() {
       this.$refs.loginFormRef.resetFields()
     },
