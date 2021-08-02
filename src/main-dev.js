@@ -12,15 +12,27 @@ import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
 
+// 导入Nprogress包对应的js和css
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+
 import axios from 'axios'
 
 
 // 配置请求的根路径
 // axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'  本地接口
 axios.defaults.baseURL = 'http://www.ysqorz.top:8888/api/private/v1/'
+// 在request拦截器中，展示进度条 NProgress.start()
 axios.interceptors.request.use(config => {
-  console.log(config)
+  // console.log(config)
+  NProgress.start()
   config.headers.Authorization = window.sessionStorage.getItem('token')
+  return config
+})
+
+// 在response拦截器中，隐藏进度条 NProgress.done()
+axios.interceptors.response.use(config => {
+  NProgress.done()
   return config
 })
 Vue.prototype.$http = axios
@@ -43,8 +55,6 @@ Vue.filter('dataFormat',function(originVal){
 
   return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
 })
-
-
 
 new Vue({
   router,

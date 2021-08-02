@@ -34,7 +34,7 @@
           </template>
         </el-table-column>
         <el-table-column label='操作'>
-          <template slot-scope='scope'>
+          <template>
             <el-button icon='el-icon-edit' size='mini' type='primary' @click='showBox'></el-button>
             <el-button icon='el-icon-location' size='mini' type='success' @click='showProgressBox'></el-button>
           </template>
@@ -60,7 +60,7 @@
       width='50%' @close='addressDialogClosed'>
       <el-form ref='addressFormRef' :model='addressForm' :rules='addressFormRules' label-width='100px'>
         <el-form-item label='省市区/县' prop='address1'>
-          <el-cascader :options='cityData' v-model='addressForm.address1'></el-cascader>
+          <el-cascader v-model='addressForm.address1' :options='cityData'></el-cascader>
         </el-form-item>
         <el-form-item label='详细地址' prop='address2'>
           <el-input v-model='addressForm.address2'></el-input>
@@ -77,16 +77,16 @@
 
     <!--展示物流进度的对话框-->
     <el-dialog
-      title="物流进度"
       :visible.sync='progressVisible'
-      width="50%">
+      title='物流进度'
+      width='50%'>
       <!--时间线-->
       <el-timeline>
         <el-timeline-item
-          v-for="(activity, index) in progressInfo"
-          :key="index"
-          :timestamp="activity.timestamp">
-          {{activity.context}}
+          v-for='(activity, index) in progressInfo'
+          :key='index'
+          :timestamp='activity.timestamp'>
+          {{ activity.context }}
         </el-timeline-item>
       </el-timeline>
     </el-dialog>
@@ -96,6 +96,7 @@
 <script>
 import cityData from '@/assets/citydata'
 import Kuaidi from '@/assets/kuaidi'
+
 export default {
   data() {
     return {
@@ -111,13 +112,21 @@ export default {
         address1: [],
         address2: ''
       },
-      addressFormRules:{
-        address1:[{ required:true, message:'请选择省市区/县',trigger:'blur'}],
-        address2:[{ required:true, message:'请填写详细地址',trigger:'blur'}],
+      addressFormRules: {
+        address1: [{
+          required: true,
+          message: '请选择省市区/县',
+          trigger: 'blur'
+        }],
+        address2: [{
+          required: true,
+          message: '请填写详细地址',
+          trigger: 'blur'
+        }]
       },
       cityData,
       progressVisible: false,
-      progressInfo:[]
+      progressInfo: []
     }
   },
   created() {
@@ -147,7 +156,7 @@ export default {
     showBox() {
       this.addressVisible = true
     },
-    addressDialogClosed(){
+    addressDialogClosed() {
       this.$refs.addressFormRef.resetFields()
     },
 
@@ -161,13 +170,13 @@ export default {
 
       this.progressVisible = true
       console.log(this.progressInfo)
-    },
+    }
   }
 }
 </script>
 
 <style lang='less' scoped>
-.el-cascader{
+.el-cascader {
   width: 100%;
 }
 </style>
